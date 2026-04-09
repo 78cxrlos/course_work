@@ -2,7 +2,9 @@ import json
 
 FILE_NAME = "students.json"
 
+# -----------------------------
 # Utility Functions
+# -----------------------------
 
 def calculate_results(scores):
     avg = sum(scores) / len(scores)
@@ -26,13 +28,43 @@ def calculate_results(scores):
     return avg, grade, risk
 
 
+# ✅ NEW: Attendance Function
+def calculate_attendance():
+    while True:
+        try:
+            total = int(input("Enter total classes: "))
+            attended = int(input("Enter classes attended: "))
+
+            if total <= 0:
+                print("Total classes must be greater than 0.")
+                continue
+
+            if attended < 0 or attended > total:
+                print("Invalid attendance values.")
+                continue
+
+            rate = (attended / total) * 100
+
+            if rate >= 75:
+                status = "Good"
+            elif rate >= 50:
+                status = "Warning"
+            else:
+                status = "Critical"
+
+            return round(rate, 2), status
+
+        except:
+            print("Invalid input. Please enter numbers only.")
+
+
 def save_to_file(student):
     try:
         data = load_from_file()
         data.append(student)
 
         with open(FILE_NAME, "w") as file:
-            json.dump(data, file)
+            json.dump(data, file, indent=4)
     except Exception as e:
         print("Error saving data:", e)
 
@@ -45,7 +77,9 @@ def load_from_file():
         return []
 
 
+# -----------------------------
 # Core Functions
+# -----------------------------
 
 def register_student():
     name = input("Enter student name: ").strip()
@@ -66,25 +100,36 @@ def register_student():
 
     scores = []
     for i in range(units):
-        try:
-            score = float(input(f"Enter score for unit {i+1}: "))
-            if score < 0 or score > 100:
-                print("Score must be between 0 and 100.")
-                return
-            scores.append(score)
-        except:
-            print("Invalid score input.")
-            return
+        while True:
+            try:
+                score = float(input(f"Enter score for unit {i+1}: "))
+                if score < 0 or score > 100:
+                    print("Score must be between 0 and 100.")
+                    continue
+                scores.append(score)
+                break
+            except:
+                print("Invalid score input.")
 
     avg, grade, risk = calculate_results(scores)
+
+    # ✅ NEW: Attendance Section
+    print("\n--- Attendance Section ---")
+    attendance_rate, attendance_status = calculate_attendance()
+
+    # Optional bonus logic
+    if attendance_status == "Critical" and risk == "High":
+        print("⚠️ ALERT: Student is at EXTREME academic risk!")
 
     student = {
         "name": name,
         "id": student_id,
         "scores": scores,
-        "average": avg,
+        "average": round(avg, 2),
         "grade": grade,
-        "risk": risk
+        "risk": risk,
+        "attendance_rate": attendance_rate,
+        "attendance_status": attendance_status
     }
 
     save_to_file(student)
@@ -105,7 +150,13 @@ def display_students():
         print(f"Average: {s['average']:.2f}")
         print(f"Grade: {s['grade']}")
         print(f"Risk Level: {s['risk']}")
+        print(f"Attendance: {s.get('attendance_rate', 'N/A')}%")
+        print(f"Attendance Status: {s.get('attendance_status', 'N/A')}")
 
+
+# -----------------------------
+# Menu
+# -----------------------------
 
 def main_menu():
     while True:
