@@ -1,1 +1,55 @@
-[{"name": "mark carlos", "id": "677252", "scores": [70.0, 82.0, 85.0, 75.0], "average": 78.0, "grade": "A", "risk": "Low"}]
+[
+    {
+        "name": "mark carlos",
+        "id": "677252",
+        "scores": [
+            70.0,
+            82.0,
+            85.0,
+            75.0
+        ],
+        "average": 78.0,
+        "grade": "A",
+        "risk": "Low"
+    },
+    {
+        "name": "bien soul",
+        "id": "455898",
+        "scores": [
+            75.0,
+            68.0,
+            80.0,
+            72.0
+        ],
+        "average": 73.75,
+        "grade": "A",
+        "risk": "Low"
+    },
+    {
+        "name": "joy wambui",
+        "id": "345276",
+        "scores": [
+            70.0,
+            68.0,
+            65.0,
+            78.0
+        ],
+        "average": 70.25,
+        "grade": "A",
+        "risk": "Low"
+    },
+    {
+        "name": "mark carlos",
+        "id": "456789",
+        "scores": [
+            70.0,
+            80.0,
+            76.0
+        ],
+        "average": 75.33,
+        "grade": "A",
+        "risk": "Low",
+        "attendance_rate": 75.0,
+        "attendance_status": "Good"
+    }
+]
